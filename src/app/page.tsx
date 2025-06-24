@@ -1,19 +1,27 @@
-'use client'
+'use client';
 import { useState } from 'react';
-import { v2 as cloudinary } from 'cloudinary';
 
+type PlayerForm = {
+  name: string;
+  battingType: string;
+  bowlingType: string;
+  age: string;
+  image: File | null;
+};
 
 export default function Home() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<PlayerForm>({
     name: '',
     battingType: '',
     bowlingType: '',
     age: '',
-    image: null as File | null,
+    image: null,
   });
 
-  const handleChange = (e: any) => {
-    const { name, value, files } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, files } = e.target as HTMLInputElement;
     setForm((prev) => ({
       ...prev,
       [name]: files ? files[0] : value,
@@ -24,9 +32,11 @@ export default function Home() {
     e.preventDefault();
 
     const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) =>
-      value && formData.append(key, value)
-    );
+    Object.entries(form).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value as Blob | string);
+      }
+    });
 
     const res = await fetch('/api/register', {
       method: 'POST',
