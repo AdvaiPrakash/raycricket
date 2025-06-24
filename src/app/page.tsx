@@ -5,16 +5,16 @@ type PlayerForm = {
   name: string;
   battingType: string;
   bowlingType: string;
-  age: string;
+  phone: string;
   image: File | null;
 };
 
 export default function Home() {
   const [form, setForm] = useState<PlayerForm>({
     name: '',
-    battingType: '',
-    bowlingType: '',
-    age: '',
+    battingType: 'N/A',
+    bowlingType: 'N/A',
+    phone: '',
     image: null,
   });
 
@@ -58,6 +58,7 @@ export default function Home() {
         <input
           type="file"
           name="image"
+                    placeholder="Image Upload"
           accept="image/*"
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded text-gray-500 placeholder:text-gray-500"
@@ -73,7 +74,7 @@ export default function Home() {
           required
         />
 
-        <select
+        {/* <select
           name="battingType"
           value={form.battingType}
           onChange={handleChange}
@@ -83,9 +84,9 @@ export default function Home() {
           <option value="">Select Batting Type</option>
           <option value="Right Hand">Right Hand</option>
           <option value="Left Hand">Left Hand</option>
-        </select>
+        </select> */}
 
-        <select
+        {/* <select
           name="bowlingType"
           value={form.bowlingType}
           onChange={handleChange}
@@ -95,13 +96,13 @@ export default function Home() {
           <option value="">Select Bowling Type</option>
           <option value="Right Hand">Right Hand</option>
           <option value="Left Hand">Left Hand</option>
-        </select>
+        </select> */}
 
         <input
           type="number"
-          name="age"
-          placeholder="Age"
-          value={form.age}
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded text-gray-500"
           required

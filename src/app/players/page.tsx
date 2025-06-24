@@ -9,7 +9,7 @@ interface Player {
   name: string;
   battingType: string;
   bowlingType: string;
-  age: string;
+  phone: string;
   imageUrl?: string;
 }
 
@@ -34,8 +34,10 @@ export default function PlayersPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 overflow-hidden text-white">
-      <div className="px-4 py-6 sm:py-10 lg:px-16">
+    <main className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white print:bg-white print:text-black">
+      <div className="px-4 py-6 lg:px-16">
+
+        {/* Web header (hide in print) */}
         <div className="flex justify-between items-center mb-6 print:hidden">
           <h1 className="text-3xl font-bold text-green-300">Registered Players</h1>
           <div className="space-x-4">
@@ -51,46 +53,46 @@ export default function PlayersPage() {
           </div>
         </div>
 
+        {/* Players List */}
         {loading ? (
           <p className="text-center text-xl mt-20">Loading players...</p>
         ) : players.length === 0 ? (
           <p className="text-center text-xl mt-20">No players registered yet.</p>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-10">
-            {players.map((player) => (
+          <div>
+            {players.map((player, index) => (
               <div
                 key={player._id}
-                className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
+                className="min-h-screen print:min-h-10 flex flex-col justify-center border-8 border-green-500 rounded-2xl p-10 my-10 print:my-4 bg-gray-800 shadow-xl print:shadow-none print:break-after-page"
               >
-                <div className="flex-shrink-0">
-                  {player.imageUrl ? (
-                    <Image
-                      src={player.imageUrl}
-                      alt={player.name}
-                      width={500}
-                      height={500}
-                      className="rounded-full border-4 border-green-400 object-cover"
-                    />
-                  ) : (
-                    <div className="w-[200px] h-[200px] flex items-center justify-center rounded-full bg-gray-600 text-white text-sm border-4 border-green-400">
-                      No Image
-                    </div>
-                  )}
-                </div>
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-10 h-full">
+                  {/* Left Circular Image */}
+                  <div className="w-[400px] h-[500px] rounded-2xl border-4 border-green-400 overflow-hidden flex items-center justify-center bg-gray-600">
+                    {player.imageUrl ? (
+                      <Image
+                        src={player.imageUrl}
+                        alt={player.name}
+                        width={300}
+                        height={300}
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <span className="text-white text-sm">No Image</span>
+                    )}
+                  </div>
 
-                <div>
-                  <h2 className="text-6xl font-semibold font-serif">
-                    {player.name}
-                  </h2>
-                  {/* <p className="text-green-300 mt-2">
-                    Batting Type: <span className="text-white">{player.battingType}</span>
-                  </p>
-                  <p className="text-green-300">
-                    Bowling Type: <span className="text-white">{player.bowlingType}</span>
-                  </p> */}
-                  <p className="text-4xl text-green-300">
-                    Mobile: <span className="text-white">{player.age}</span>
-                  </p>
+                  {/* Center Details */}
+                  <div className="text-center lg:text-left flex-1">
+                    <h2 className="text-6xl font-bold font-serif mb-6">{player.name}</h2>
+                    <p className="text-4xl text-green-300">
+                      Mobile: <span className="text-white">{player.phone}</span>
+                    </p>
+                  </div>
+
+                  {/* Right Chronological Number */}
+                  <div className="text-9xl font-bold text-green-500">
+                    #{index + 1}
+                  </div>
                 </div>
               </div>
             ))}

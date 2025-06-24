@@ -20,10 +20,10 @@ export async function POST(request: Request) {
     const name = formData.get('name') as string;
     const battingType = formData.get('battingType') as string;
     const bowlingType = formData.get('bowlingType') as string;
-    const age = formData.get('age') as string;
+    const phone = formData.get('phone') as string;
     const image = formData.get('image') as File;
 
-    if (!name || !battingType || !bowlingType || !age || !image) {
+    if (!name || !battingType || !bowlingType || !phone || !image) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       name,
       battingType,
       bowlingType,
-      age,
+      phone,
       imageUrl: uploadResult.secure_url,
     };
 
