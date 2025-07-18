@@ -24,7 +24,17 @@ export async function POST(request: Request) {
     const image = formData.get('image') as File;
 
     if (!name || !battingType || !bowlingType || !phone || !image) {
-      return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Missing fields' }, { status: 400 });
+    }
+
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection('players');
+
+    // Check for duplicate phone number
+    const existingPlayer = await collection.findOne({ phone });
+    if (existingPlayer) {
+      return NextResponse.json({ success: false, message: 'Phone already registered' }, { status: 400 });
     }
 
     // Convert image file to base64
@@ -45,17 +55,12 @@ export async function POST(request: Request) {
       imageUrl: uploadResult.secure_url,
     };
 
-    // Store in MongoDB
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection('players');
-
     await collection.insertOne(newPlayer);
 
-    return NextResponse.json({ message: 'Player registered successfully!' });
+    return NextResponse.json({ success: true, message: 'Player registered successfully!' });
   } catch (error) {
     console.error('Error in /api/register:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
   } finally {
     await client.close();
   }
