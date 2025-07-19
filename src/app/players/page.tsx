@@ -27,7 +27,7 @@ export default function PlayersPage() {
       const res = await fetch('/api/players');
       const data = await res.json();
       setPlayers(data.players || []);
-    } catch (error) {
+    } catch {
       setError('Failed to fetch players');
       setPlayers([]);
     } finally {
