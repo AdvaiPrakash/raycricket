@@ -26,9 +26,10 @@ export default function PlayersPage() {
     try {
       const res = await fetch('/api/players');
       const data = await res.json();
-      setPlayers(data.players);
+      setPlayers(data.players || []);
     } catch (error) {
       setError('Failed to fetch players');
+      setPlayers([]);
     } finally {
       setLoading(false);
     }
@@ -127,14 +128,14 @@ export default function PlayersPage() {
         )}
         {loading ? (
           <p className="text-center text-xl mt-20">Loading players...</p>
-        ) : players.length === 0 ? (
+        ) : !players || players.length === 0 ? (
           <p className="text-center text-xl mt-20">No players registered yet.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {players.map((player, index) => (
+            {players?.map((player, index) => (
               <div
                 key={player._id}
-                className={`relative bg-white rounded-2xl  shadow-lg border border-blue-100 p-6 flex flex-col items-center transition-transform hover:scale-[1.02] print:shadow-none print:border-0 print:p-0 print:bg-white print:items-center print:justify-center ${index !== players.length - 1 ? 'print:break-after-page' : ''}`}
+                className={`relative bg-white rounded-2xl  shadow-lg border border-blue-100 p-6 flex flex-col items-center transition-transform hover:scale-[1.02] print:shadow-none print:border-0 print:p-0 print:bg-white print:items-center print:justify-center ${index !== (players?.length || 0) - 1 ? 'print:break-after-page' : ''}`}
               >
                 <div
                   className="w-60 h-60 rounded-full print:rounded-2xl border-4 border-blue-300 overflow-hidden flex items-center justify-center bg-blue-50 mb-4 print:w-[27rem] print:h-[27rem] print:border-[8px] print:mb-8"
