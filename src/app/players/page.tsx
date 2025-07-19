@@ -20,6 +20,7 @@ export default function PlayersPage() {
   const [editForm, setEditForm] = useState<Partial<Player>>({});
   const [actionLoading, setActionLoading] = useState<string | null>(null); // id of player being deleted/edited
   const [error, setError] = useState<string | null>(null);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const fetchPlayers = async () => {
     setLoading(true);
@@ -104,6 +105,26 @@ export default function PlayersPage() {
     setEditForm({});
   };
 
+  const handleLogout = async () => {
+    setLogoutLoading(true);
+    try {
+      const res = await fetch('/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const result = await res.json();
+      if (result.success) {
+        window.location.href = '/login';
+      } else {
+        setError('Failed to logout');
+      }
+    } catch {
+      setError('Failed to logout');
+    } finally {
+      setLogoutLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 text-gray-900 flex flex-col items-center py-10 p-2">
       <div className="w-full max-w-6xl">
@@ -115,6 +136,13 @@ export default function PlayersPage() {
               className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded shadow print:hidden"
             >
               Export as PDF
+            </button>
+            <button
+              onClick={handleLogout}
+              disabled={logoutLoading}
+              className="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded shadow print:hidden disabled:opacity-60"
+            >
+              {logoutLoading ? 'Logging out...' : 'Logout'}
             </button>
             <Link href="/" className="text-blue-500 hover:underline text-sm md:text-base font-semibold">
               ← Back

@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 
 type PlayerForm = {
   name: string;
@@ -72,7 +73,12 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex justify-center items-center">
       <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-2xl border border-blue-100">
-        <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-6 tracking-tight">Register Player</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-extrabold text-blue-700 tracking-tight">Register Player</h1>
+          <Link href="/login" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+            Admin Login
+          </Link>
+        </div>
         {message && (
           <div className="mb-4 p-3 rounded bg-green-100 text-green-800 text-center font-medium border border-green-200 animate-fade-in">
             {message}
