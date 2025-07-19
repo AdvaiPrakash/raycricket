@@ -105,19 +105,19 @@ export default function PlayersPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 text-gray-900 flex flex-col items-center py-10">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 text-gray-900 flex flex-col items-center py-10 p-2">
       <div className="w-full max-w-6xl">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-extrabold print:hidden text-blue-700">Registered Players</h1>
+        <div className="flex justify-between p-2 items-center mb-8">
+          <h1 className="text-xl md:text-4xl font-extrabold print:hidden text-blue-700">Registered Players</h1>
           <div className="space-x-4">
             <button
               onClick={() => window.print()}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded shadow"
+              className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded shadow print:hidden"
             >
               Export as PDF
             </button>
-            <Link href="/" className="text-blue-500 hover:underline font-semibold">
-              ← Back to Registration
+            <Link href="/" className="text-blue-500 hover:underline text-sm md:text-base font-semibold">
+              ← Back
             </Link>
           </div>
         </div>
