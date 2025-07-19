@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   title: "Ray Cricket - Player Registration",
   description: "Cricket player registration and management system",
   icons: {
-    icon: '/cricket.ico',
-    shortcut: '/cricket.ico',
-    apple: '/cricket.ico',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
 };
 
